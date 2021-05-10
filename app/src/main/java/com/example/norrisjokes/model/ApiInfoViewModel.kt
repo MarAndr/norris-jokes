@@ -1,4 +1,4 @@
-package com.example.norrisjokes.ui.apiInfo
+package com.example.norrisjokes.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_jokes"
-        android:name="com.example.norrisjokes.ui.jokes.JokesFragment"
+        android:name="com.example.norrisjokes.ui.JokesFragment"
         android:label="@string/title_jokes"
         tools:layout="@layout/fragment_jokes" />
 
     <fragment
         android:id="@+id/navigation_web"
-        android:name="com.example.norrisjokes.ui.apiInfo.ApiInfoFragment"
+        android:name="com.example.norrisjokes.ui.ApiInfoFragment"
         android:label="@string/title_web"
         tools:layout="@layout/fragment_apiinfo" />
 

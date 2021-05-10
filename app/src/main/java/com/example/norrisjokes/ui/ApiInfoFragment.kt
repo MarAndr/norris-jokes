@@ -9,24 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.norrisjokes.R
+import com.example.norrisjokes.ViewBindingFragment
+import com.example.norrisjokes.databinding.FragmentApiinfoBinding
+import com.example.norrisjokes.databinding.FragmentJokesBinding
 import com.example.norrisjokes.model.ApiInfoViewModel
 
-class ApiInfoFragment : Fragment() {
+class ApiInfoFragment : ViewBindingFragment<FragmentApiinfoBinding>(FragmentApiinfoBinding::inflate) {
 
-    private lateinit var dashboardViewModel: ApiInfoViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        dashboardViewModel =
-                ViewModelProvider(this).get(ApiInfoViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_apiinfo, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+        binding.apply {
+        webViewApiInfoFragment.settings.javaScriptEnabled
+        webViewApiInfoFragment.loadUrl("https://www.icndb.com/api/")
+        }
+
     }
 }

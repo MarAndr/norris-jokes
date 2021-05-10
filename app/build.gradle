@@ -63,6 +63,8 @@ dependencies {
     implementation "com.squareup.moshi:moshi:$moshiVersion"
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
+    //Okhttp
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     //RoomDao
     def room_version = "2.2.6"
     implementation "androidx.room:room-runtime:$room_version"

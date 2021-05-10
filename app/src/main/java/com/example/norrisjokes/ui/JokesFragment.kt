@@ -24,8 +24,7 @@ class JokesFragment : ViewBindingFragment<FragmentJokesBinding>(FragmentJokesBin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        jokesViewModel.addJoke(Joke(text = "The joke from Chuck Norris"))
-        jokesViewModel.getJokes()
+        jokesViewModel.getRandomJokesFromServer(5)
         initList()
         observeLiveData()
     }

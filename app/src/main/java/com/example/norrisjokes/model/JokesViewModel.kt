@@ -28,4 +28,10 @@ class JokesViewModel @ViewModelInject constructor(
             _jokes.postValue(repository.getJokes())
         }
     }
+
+    fun getRandomJokesFromServer(jokesAmount: Int){
+        viewModelScope.launch {
+        _jokes.postValue(repository.getRandomJokes(jokesAmount))
+        }
+    }
 }

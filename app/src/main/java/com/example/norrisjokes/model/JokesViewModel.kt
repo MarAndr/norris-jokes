@@ -23,18 +23,6 @@ class JokesViewModel @ViewModelInject constructor(
     private val _downLoadingState = MutableStateFlow<DownloadingState>(DownloadingState.EMPTY)
     val downLoadingState: StateFlow<DownloadingState> = _downLoadingState
 
-    fun addJoke(joke: Joke) {
-        viewModelScope.launch {
-            repository.addJoke(joke)
-        }
-    }
-
-    fun getJokes() {
-        viewModelScope.launch {
-            _jokes.postValue(repository.getJokes())
-        }
-    }
-
     fun getRandomJokesFromServer(context: Context, jokesAmount: Int) {
         viewModelScope.launch {
             _downLoadingState.value = DownloadingState.LOADING
@@ -58,7 +46,7 @@ class JokesViewModel @ViewModelInject constructor(
         }
     }
 
-    fun hasInternetConnection(context: Context): Boolean {
+    private fun hasInternetConnection(context: Context): Boolean {
         val connMgr = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         var isWifiConn: Boolean = false
         var isMobileConn: Boolean = false

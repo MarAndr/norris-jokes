@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
-object RetrofitBuilderModule {
+object NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(): Api{

@@ -18,11 +18,24 @@ class ApiInfoFragment : ViewBindingFragment<FragmentApiinfoBinding>(FragmentApii
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.webViewApiInfoFragment.settings.javaScriptEnabled
+        if (savedInstanceState == null){
         binding.apply {
-        webViewApiInfoFragment.settings.javaScriptEnabled
         webViewApiInfoFragment.loadUrl("https://www.icndb.com/api/")
         }
+        }
 
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        binding.webViewApiInfoFragment.saveState(outState)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if (savedInstanceState != null) {
+            binding.webViewApiInfoFragment.restoreState(savedInstanceState)
+        }
     }
 }

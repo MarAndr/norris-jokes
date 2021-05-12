@@ -9,7 +9,13 @@
         android:id="@+id/navigation_jokes"
         android:name="com.example.norrisjokes.ui.JokesFragment"
         android:label="@string/title_jokes"
-        tools:layout="@layout/fragment_jokes" />
+        tools:layout="@layout/fragment_jokes" >
+        <action
+            android:id="@+id/action_navigation_jokes_to_navigation_web"
+            app:destination="@id/navigation_web"
+            app:popUpTo="@id/navigation_jokes"
+            app:popUpToInclusive="false" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_web"

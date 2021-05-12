@@ -1,21 +1,16 @@
 package com.example.norrisjokes.ui
 
-import android.content.Context
-import android.net.ConnectivityManager
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.norrisjokes.R
 import com.example.norrisjokes.ViewBindingFragment
-import com.example.norrisjokes.data.Joke
 import com.example.norrisjokes.databinding.FragmentJokesBinding
-import com.example.norrisjokes.model.DownloadingState
-import com.example.norrisjokes.model.JokesViewModel
+import com.example.norrisjokes.state.DownloadingState
+import com.example.norrisjokes.viewmodel.JokesViewModel
 import com.example.norrisjokes.util.createToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -32,7 +27,7 @@ class JokesFragment : ViewBindingFragment<FragmentJokesBinding>(FragmentJokesBin
 
         binding.materialButton.setOnClickListener {
             val jokesAmount = binding.editTextJokesFragment.text.toString().trim().toIntOrNull() ?: 0
-            jokesViewModel.getRandomJokesFromServer(requireContext(), jokesAmount)
+            jokesViewModel.getRandomJokesFromServer(jokesAmount)
         }
         initList()
         observeData()

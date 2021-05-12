@@ -1,4 +1,4 @@
-package com.example.norrisjokes.model
+package com.example.norrisjokes.data
 
 import com.squareup.moshi.JsonClass
 

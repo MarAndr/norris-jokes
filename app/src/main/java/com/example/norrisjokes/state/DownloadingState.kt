@@ -1,4 +1,4 @@
-package com.example.norrisjokes.model
+package com.example.norrisjokes.state
 
 sealed class DownloadingState {
     object LOADING: DownloadingState()

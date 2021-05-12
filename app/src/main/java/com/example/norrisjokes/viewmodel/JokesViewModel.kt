@@ -1,5 +1,6 @@
-package com.example.norrisjokes.model
+package com.example.norrisjokes.viewmodel
 
+import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import androidx.hilt.lifecycle.ViewModelInject
@@ -8,14 +9,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.norrisjokes.data.Joke
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.norrisjokes.repository.JokesRepository
+import com.example.norrisjokes.repository.network.NetworkState
+import com.example.norrisjokes.state.DownloadingState
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 
 class JokesViewModel @ViewModelInject constructor(
-    private val repository: JokesRepository
+    private val repository: JokesRepository,
+    private val networkState: NetworkState
 ) : ViewModel() {
 
     private val _jokes = MutableLiveData<List<Joke>>()
@@ -23,14 +28,17 @@ class JokesViewModel @ViewModelInject constructor(
     private val _downLoadingState = MutableStateFlow<DownloadingState>(DownloadingState.EMPTY)
     val downLoadingState: StateFlow<DownloadingState> = _downLoadingState
 
-    fun getRandomJokesFromServer(context: Context, jokesAmount: Int) {
+    fun getRandomJokesFromServer(jokesAmount: Int) {
         viewModelScope.launch {
             _downLoadingState.value = DownloadingState.LOADING
             try {
-                if (hasInternetConnection(context)) {
+                if (networkState.hasInternetConnection()) {
                     if (jokesAmount != 0) {
-                        _downLoadingState.value = DownloadingState.SUCCESS
+                        val result = async {
                         _jokes.postValue(repository.getRandomJokes(jokesAmount))
+                        }
+                        result.await()
+                        _downLoadingState.value = DownloadingState.SUCCESS
                     } else {
                         _downLoadingState.value =
                             DownloadingState.ERROR("You should enter the amount of jokes before!")
@@ -44,23 +52,5 @@ class JokesViewModel @ViewModelInject constructor(
                 _downLoadingState.value = DownloadingState.ERROR("Unknown error. Try it later")
             }
         }
-    }
-
-    private fun hasInternetConnection(context: Context): Boolean {
-        val connMgr = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        var isWifiConn: Boolean = false
-        var isMobileConn: Boolean = false
-
-        connMgr.allNetworks.forEach { network ->
-            connMgr.getNetworkInfo(network)?.apply {
-                if (type == ConnectivityManager.TYPE_WIFI) {
-                    isWifiConn = isWifiConn or isConnected
-                }
-                if (type == ConnectivityManager.TYPE_MOBILE) {
-                    isMobileConn = isMobileConn or isConnected
-                }
-            }
-        }
-        return isMobileConn || isWifiConn
     }
 }

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.norrisjokes.data.Joke
 import com.example.norrisjokes.databinding.ItemJokeBinding
 
-class JokesListAdapter: ListAdapter<Joke, JokesListAdapter.JokesViewHolder>(JokesListDiffUtil()) {
+class JokesListAdapter : ListAdapter<Joke, JokesListAdapter.JokesViewHolder>(JokesListDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JokesViewHolder {
         val binding = ItemJokeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -18,15 +18,16 @@ class JokesListAdapter: ListAdapter<Joke, JokesListAdapter.JokesViewHolder>(Joke
     override fun onBindViewHolder(holder: JokesViewHolder, position: Int) {
         val joke = getItem(position)
         holder.bind(joke)
-
     }
 
-    class JokesViewHolder(private val binding: ItemJokeBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(joke: Joke){
+    class JokesViewHolder(private val binding: ItemJokeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(joke: Joke) {
             binding.textViewItemJokeJokeText.text = joke.text
         }
     }
-    class JokesListDiffUtil: DiffUtil.ItemCallback<Joke>(){
+
+    class JokesListDiffUtil : DiffUtil.ItemCallback<Joke>() {
         override fun areItemsTheSame(oldItem: Joke, newItem: Joke): Boolean {
             return oldItem.id == newItem.id
         }
